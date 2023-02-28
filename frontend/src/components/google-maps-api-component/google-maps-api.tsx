@@ -43,6 +43,7 @@ const _GoogleMaps: FC = () => {
     const [dialogList, setDialoglList] = useState<string[]>();
     const [infoWindowArray, setInfoWindow] = useState<IIwContent[]>([]);
     const {directionCurrent, directions} = useAppSelector(state => state.directions);
+    const {width: drawerWidth} = useAppSelector(state => state.drawer.drawer);
 
     const onLoadHandler = useCallback((map) => {
         mapRef.current = map;
@@ -102,18 +103,18 @@ const _GoogleMaps: FC = () => {
 
     return (
         <Box className={css.mainBox}>
-            <Box className={css.boxPopper}>
+            <Box className={css.boxPopper} marginLeft={drawerWidth}>
                 <Box className={css.boxIconPointer}>
-                    <PositionedPopper PopperPlacementType={PopperTypesEnum.BOTTOM} />
+                    <PositionedPopper PopperPlacementType={PopperTypesEnum.BOTTOM}/>
                 </Box>
-                <Box marginX={4}>
+                <Box marginX={5}>
                     <span
                         id="pointerId"
                         onClick={() => onPointerClickHandler()}
                     >
                         {showPlacesAutocomplete ? "👈" : "👉"}
                     </span>
-                    {showPlacesAutocomplete && <PlacesAutocompleteForm />}
+                    {showPlacesAutocomplete && <PlacesAutocompleteForm/>}
                 </Box>
             </Box>
             <GoogleMap
@@ -137,13 +138,13 @@ const _GoogleMaps: FC = () => {
                         >
                             {(markerCurrent &&
                                     markerCurrent.id === marker.id) &&
-                              <InfoWindow
-                                key={marker.id}
-                                onCloseClick={() => setMarkerCurrent(null)}
-                                position={{...marker.latLng}}
-                              >
-                                <p>{getContentById(marker)}</p>
-                              </InfoWindow>
+                                <InfoWindow
+                                    key={marker.id}
+                                    onCloseClick={() => setMarkerCurrent(null)}
+                                    position={{...marker.latLng}}
+                                >
+                                    <p>{getContentById(marker)}</p>
+                                </InfoWindow>
                             }
                         </Marker>;
                     })
@@ -153,14 +154,14 @@ const _GoogleMaps: FC = () => {
                         directions
                             .map(resp =>
                                 resp.active &&
-                              <DirectionsRenderer
-                                key={resp.id}
-                                directions={resp.result}
-                              />
+                                <DirectionsRenderer
+                                    key={resp.id}
+                                    directions={resp.result}
+                                />
                             ))
                 }
                 <Dialog open={showModal}>
-                    <DialogList selectList={dialogList} />
+                    <DialogList selectList={dialogList}/>
                     <Button onClick={() => setShowModal(false)}>
                         Close
                     </Button>

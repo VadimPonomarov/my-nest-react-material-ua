@@ -5,7 +5,7 @@ import {AccountCircle, Menu as MenuIcon} from "@mui/icons-material";
 import {AppBar, Box, FormControlLabel, FormGroup, IconButton, Menu, MenuItem, Switch, Toolbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-import {changeDrawer,  setIsAuth, useAppDispatch, useAppSelector} from '../../storage';
+import {changeDrawer, setIsAuth, useAppDispatch, useAppSelector} from '../../storage';
 import css from './index.module.scss';
 
 const _AppBar: FC = () => {
@@ -23,8 +23,10 @@ const _AppBar: FC = () => {
             navigate("/login");
         }
     };
+    const {width: drawerWidth} = useAppSelector(state => state.drawer.drawer);
+
     const [_width, setWidth] = useState<string>();
-    
+
     useEffect(() => {
         setWidth((+width.split('px')[0] - 6) + "px");
     }, [width])
@@ -39,10 +41,15 @@ const _AppBar: FC = () => {
 
     const handleClickMenuIcon: React.MouseEventHandler<HTMLButtonElement> =
         (e: React.MouseEvent<HTMLButtonElement>) => {
-            +width.split('px')[0] < 40 ?
-                dispatch(changeDrawer({drawer: {width: "40px", isOpened: !isOpened}})) :
-                dispatch(changeDrawer({drawer: {isOpened: !isOpened}}));
-        };
+            if (drawerWidth !== '0px') {
+                dispatch(changeDrawer({drawer: {width: "0px", isOpened: false}}))
+            } else {
+                +width.split('px')[0] < 400 ?
+                    dispatch(changeDrawer({drawer: {width: "400px", isOpened: true}})) :
+                    dispatch(changeDrawer({drawer: {isOpened: true}}));
+            }
+        }
+
     return (
         <Box sx={{
             flexGrow: 1,

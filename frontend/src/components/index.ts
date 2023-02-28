@@ -10,3 +10,5 @@ export * from './dialog/dialogList';
 export * from './multiple-select/multiple-select-list';
 export * from './auth/login/login';
 export * from './auth/logout/logout';
+export * from './tabs/basicTab';
+export * from './truckList/truckList';
