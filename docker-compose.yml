@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "3000:3001"
+    depends_on:
+      - db
+    volumes:
+      - ./backend/package.json:/app/package.json
+      - ./backend/dist:/app
+      - /app/node_modules
+    command: >
+      sh -c  "npm run prisma:migrate:init && npm run prisma:seed"
+
+  db:
+    image: mysql:8.0
+    restart: on-failure
+    environment:
+      MYSQL_USER: user
+      MYSQL_USER_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: versia_plus
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - "8080:8080"
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    restart: on-failure
+    volumes:
+      - ./client:/usr/share/nginx/html;
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf

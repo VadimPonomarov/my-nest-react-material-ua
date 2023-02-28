@@ -1,0 +1,17 @@
+.inputBox {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 5px;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  background-color: lightcyan;
+  border-radius: 5px;
+}
+
+.paper {
+  border-radius: 5px;
+}
+

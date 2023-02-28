@@ -1,0 +1,12 @@
+.mainBox {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 4px blue;
+  cursor: col-resize;
+  transition: width 2s;
+}
+.paper {
+  cursor: default;
+  width: calc(100% - 4px);
+}

@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @unique @default(autoincrement())
+  email     String    @unique
+  name      String
+  password  String
+  activated Boolean   @default(false)
+  roles     Role[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("users")
+}
+
+model Role {
+  id        Int       @id @unique @default(autoincrement())
+  name      RoleEnum
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+
+  @@map("roles")
+}
+
+model Token {
+  id        Int       @id @unique @default(autoincrement())
+  token     String    @unique
+  type      JwtEnum
+  createdAt DateTime? @default(now())
+
+  @@map("tokens")
+}
+
+model Truck {
+  id        Int       @id @unique @default(autoincrement())
+  inactive  Boolean   @default(false)
+  code      String?
+  name      String    @unique
+  tracing   Boolean   @default(true)
+  lat       String?
+  lng       String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("trucks")
+}
+
+enum RoleEnum {
+  USER
+  ADMIN
+}
+
+enum JwtEnum {
+  ACCESS
+  REFRESH
+  ACTIVATE
+}

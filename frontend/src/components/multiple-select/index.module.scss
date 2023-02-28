@@ -1,0 +1,28 @@
+$width: 300px;
+
+.formContainer {
+  min-width: $width;
+
+  &.selector {
+    min-width: inherit;
+  }
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputFilter {
+  min-width: $width;
+}
+
+.boxContainer {
+  display: flex;
+  align-items: center;
+
+  &.innerBox {
+    display: inherit;
+    flex-direction: column;
+  }
+}

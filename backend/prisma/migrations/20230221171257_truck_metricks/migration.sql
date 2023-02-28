@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `trucks` ADD COLUMN `lat` DOUBLE NULL,
+    ADD COLUMN `lng` DOUBLE NULL,
+    ADD COLUMN `tracing` BOOLEAN NOT NULL DEFAULT true;
