@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from 'react';
+import React, {memo, useEffect, useRef, useState, useTransition} from 'react';
 
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,10 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
 import {v4} from 'uuid';
 
-import { columns } from '.';
+import {columns} from '.';
 import {useAppDispatch, useAppSelector, truckList} from '../../storage';
+import {ITruck} from '../../storage/slices/truck-slice/interfaces';
 
 const _TruckList = () => {
     const dispatch = useAppDispatch();
@@ -21,12 +23,29 @@ const _TruckList = () => {
     const getTruckList = () => {
         dispatch(truckList());
     };
-    useEffect(() => {
+    const [filtered, setFiltered] = useState([]);
+    const [pending, startTransition] = useTransition();
 
-    }, [trucks, refresh])
+    const filterHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        startTransition(() => {
+            /* setFilter(e.target.value);*/
+            const candidate: ITruck[] = trucks
+                .filter(truck =>
+                    truck.name.toLowerCase()
+                        .match(e.target.value.toLowerCase())
+                );
+            setFiltered(candidate);
+        });
+    };
+
+    useEffect(() => {
+        setFiltered(trucks);
+    }, [trucks])
+    const setFilterNullHandler = () => {
+        setFiltered(trucks);
+    };
 
     /*-----------*/
-
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -54,13 +73,19 @@ const _TruckList = () => {
                                 >
                                     {column.label === 'Show' && <span><Checkbox size="small"/></span>}
                                     {column.label === 'Info' && <span>️"💬️"</span>}
-                                    {column.label === 'Name' && <span>{column.label}</span>}
+                                    {column.label === 'Name' &&
+                                        <TextField
+                                            placeholder={'Filter ...'}
+                                            variant={'standard'}
+                                            onChange={(e) => filterHandler(e)}
+                                        />
+                                    }
                                 </TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {trucks
+                        {filtered
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
@@ -68,7 +93,8 @@ const _TruckList = () => {
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell key={column.id} align={column.align} style={{padding: "0 4px", height: "15px"}}>
+                                                <TableCell key={column.id} align={column.align}
+                                                           style={{padding: "0 4px", height: "15px"}}>
                                                     {column.id === 'Show' && <Checkbox size="small"/>}
                                                     {column.id === 'Info' && <span>"💬️"</span>}
                                                     {column.id === 'Name' && row.name}
@@ -82,13 +108,14 @@ const _TruckList = () => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[10, 25, 50, 75, 100]}
                 component="div"
                 count={trucks.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{display: 'flex', justifyContent: 'start'}}
             />
         </Paper>
 

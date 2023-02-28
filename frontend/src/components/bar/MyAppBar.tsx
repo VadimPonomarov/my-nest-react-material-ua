@@ -6,6 +6,7 @@ import {AppBar, Box, FormControlLabel, FormGroup, IconButton, Menu, MenuItem, Sw
 import {useNavigate} from "react-router-dom";
 
 import {changeDrawer, setIsAuth, useAppDispatch, useAppSelector} from '../../storage';
+import {config} from '../truckList';
 import css from './index.module.scss';
 
 const _AppBar: FC = () => {
@@ -44,8 +45,8 @@ const _AppBar: FC = () => {
             if (drawerWidth !== '0px') {
                 dispatch(changeDrawer({drawer: {width: "0px", isOpened: false}}))
             } else {
-                +width.split('px')[0] < 400 ?
-                    dispatch(changeDrawer({drawer: {width: "400px", isOpened: true}})) :
+                +width.split('px')[0] < config.initialWidth ?
+                    dispatch(changeDrawer({drawer: {width: config.initialWidth + 'px', isOpened: true}})) :
                     dispatch(changeDrawer({drawer: {isOpened: true}}));
             }
         }
