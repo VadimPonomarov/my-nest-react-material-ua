@@ -33,7 +33,7 @@ const transformCircular = createTransform(
 const persistConfig = {
     key: 'root',
     storage,
-    transforms: [transformCircular]
+   /* transforms: [transformCircular]*/
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

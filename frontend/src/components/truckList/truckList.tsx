@@ -1,6 +1,7 @@
 import React, {memo, useEffect, useRef, useState, useTransition} from 'react';
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -60,6 +61,12 @@ const _TruckList = () => {
 
     return (
         <Paper sx={{width: '100%', overflow: 'hidden'}}>
+            <Button
+                size='small'
+                onClick={() => getTruckList()}
+            >
+                Refresh
+            </Button>
             <TableContainer>
                 <Table>
                     <TableHead>
