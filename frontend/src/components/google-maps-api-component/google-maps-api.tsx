@@ -4,6 +4,7 @@ import {Box, Dialog} from '@mui/material';
 import Button from '@mui/material/Button';
 import {DirectionsRenderer, GoogleMap, InfoWindow, Marker, useLoadScript} from '@react-google-maps/api';
 
+import {iconsEnum} from '../../icons';
 import {
     addMarker,
     deleteMarker,
@@ -36,6 +37,7 @@ const _GoogleMaps: FC = () => {
     const dispatch = useAppDispatch();
 
     const {markers, currentIcon} = useAppSelector(state => state.markers);
+    const {trucks} = useAppSelector(state => state.truck);
     const [startMarkerOnDrag, setStartMarkerOnDrag] = useState<ILatLng>();
     const [markerCurrent, setMarkerCurrent] = useState(undefined);
     const [showPlacesAutocomplete, setShowPlacesAutocomplete] = useState(false);
@@ -149,6 +151,19 @@ const _GoogleMaps: FC = () => {
                         </Marker>;
                     })
                 }
+
+                {trucks &&
+                    trucks.map(truck => {
+                        const position = {lat: +truck.lat, lng: +truck.lng};
+                        const options = markerOptions(mapRef.current,
+                            {
+                                id: '' + truck.id,
+                                latLng: {...position},
+                                icon: {url: iconsEnum.TRUCK_1}
+                            })
+                        return <Marker key={truck.id} options={options} position={position}/>
+                    })}
+
                 {
                     directions && (
                         directions
