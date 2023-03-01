@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { memo } from 'react';
+import {memo} from 'react';
 
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 
 
-import { TruckList } from '..';
+import {TruckList} from '..';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -16,7 +17,7 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
         <div
@@ -27,8 +28,8 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                <Box sx={{p: 3}}>
+                    <Box>{children}</Box>
                 </Box>
             )}
         </div>
@@ -50,8 +51,8 @@ export const _BasicTabs = () => {
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{width: '100%'}}>
+            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Item One" {...a11yProps(0)} />
                     <Tab label="Item Two" {...a11yProps(1)} />

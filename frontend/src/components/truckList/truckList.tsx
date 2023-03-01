@@ -28,7 +28,6 @@ const _TruckList = () => {
 
     const filterHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         startTransition(() => {
-            /* setFilter(e.target.value);*/
             const candidate: ITruck[] = trucks
                 .filter(truck =>
                     truck.name.toLowerCase()
@@ -62,7 +61,7 @@ const _TruckList = () => {
     return (
         <Paper sx={{width: '100%', overflow: 'hidden'}}>
             <TableContainer>
-                <Table stickyHeader aria-label="sticky table">
+                <Table>
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
@@ -74,11 +73,11 @@ const _TruckList = () => {
                                     {column.label === 'Show' && <span><Checkbox size="small"/></span>}
                                     {column.label === 'Info' && <span>️"💬️"</span>}
                                     {column.label === 'Name' &&
-                                        <TextField
+                                        <Box><TextField
                                             placeholder={'Filter ...'}
                                             variant={'standard'}
                                             onChange={(e) => filterHandler(e)}
-                                        />
+                                        /></Box>
                                     }
                                 </TableCell>
                             ))}

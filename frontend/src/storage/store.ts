@@ -5,6 +5,7 @@ import {
     ThunkAction,
     getDefaultMiddleware,
 } from '@reduxjs/toolkit';
+import * as flatted from 'flatted';
 import {persistReducer, createTransform } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
@@ -24,10 +25,15 @@ const rootReducer = combineReducers({
     auth: authSlice,
     truck: truckSlice
 });
+const transformCircular = createTransform(
+    (inboundState, key) => flatted.stringify(inboundState),
+    (outboundState, key) => flatted.parse(outboundState),
+)
 
 const persistConfig = {
     key: 'root',
     storage,
+    transforms: [transformCircular]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
