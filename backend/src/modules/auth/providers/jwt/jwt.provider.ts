@@ -4,7 +4,7 @@ import { JwtEnum } from '../../../../common/constants';
 import { JwtService } from '@nestjs/jwt';
 import config from '../../../../config/configuration';
 import { JwtDto, JwtPayloadDto } from '../../dto';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class JwtProvider {

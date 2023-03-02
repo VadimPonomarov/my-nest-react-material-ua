@@ -5,6 +5,8 @@ import config from '../../../../config/configuration';
 import {TruckEntity} from '../../dto';
 import {TruckNamesListDto} from '../../dto';
 import {PrismaService} from 'src/core/prisma.service';
+import {Cron, CronExpression} from '@nestjs/schedule';
+import {TruckService} from '../../truck.service';
 
 @Injectable()
 export class ScrapingProvider {
@@ -53,11 +55,10 @@ export class ScrapingProvider {
     }
 
     async updateTruckCoordinates(truckList: TruckNamesListDto[]): Promise<void> {
-        console.log(truckList);
         await this.getPass();
         const arr = [];
         try {
-            for (const item of truckList) {
+            for (const item of truckList as TruckNamesListDto[]) {
                 await this.page
                     .locator(`xpath=//span[contains(text(), "${item.name}")]`)
                     .nth(0)
@@ -77,12 +78,17 @@ export class ScrapingProvider {
                     .replace('<div>', '')
                     .replace('</div>', ',');
                 const [lat, lng] = await _res.split(',');
+                const info: { stop: string, tracing: string } = {stop: '', tracing: ''};
+                await this.page.locator(`//span[contains(text(), "Бражко")]/../../following-sibling::td[2]/span/span`)
+                    .nth(0).getAttribute('class').then(res => info.stop = res.split(/\s+/)[1]);
+                await this.page.locator(`//span[contains(text(), "Бражко")]/../../following-sibling::td[4]/span`).nth(0)
+                    .getAttribute('class').then(res => info.tracing = res.split(/\s+/)[1]);
                 await arr.push({name: item.name, latLng: {lat, lng}});
                 await this.prismaService.truck.update({
                     where: {name: item.name},
-                    data: {lat, lng},
+                    data: {lat, lng, stop: info.stop, tracing: info.tracing},
                 });
-                await console.log({name: item.name, latLng: {lat, lng}});
+                await console.log({name: item.name, stop: info.stop, tracing: info.tracing, latLng: {lat, lng}});
             }
         } catch (e) {
             console.log(e)

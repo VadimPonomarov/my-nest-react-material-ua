@@ -42,10 +42,11 @@ model Token {
 
 model Truck {
   id        Int       @id @unique @default(autoincrement())
-  inactive  Boolean   @default(false)
+  watch     Boolean   @default(true)
   code      String?
   name      String    @unique
-  tracing   Boolean   @default(true)
+  stop      String?
+  tracing   String?
   lat       String?
   lng       String?
   createdAt DateTime? @default(now())
