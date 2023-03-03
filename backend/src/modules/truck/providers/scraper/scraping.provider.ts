@@ -80,18 +80,18 @@ export class ScrapingProvider {
                 const [lat, lng] = await _res.split(',');
                 const info: { stop: string, tracing: string } = {stop: '', tracing: ''};
                 await this.page.locator(`//span[contains(text(), "Бражко")]/../../following-sibling::td[2]/span/span`)
-                    .nth(0).getAttribute('class').then(res => info.stop = res.split(/\s+/)[1]);
+                    .nth(0).getAttribute('class').then(res => info.stop = res.split(/\s+/)[1]).catch(e=>{});
                 await this.page.locator(`//span[contains(text(), "Бражко")]/../../following-sibling::td[4]/span`).nth(0)
-                    .getAttribute('class').then(res => info.tracing = res.split(/\s+/)[1]);
+                    .getAttribute('class').then(res => info.tracing = res.split(/\s+/)[1]).catch(e=>{});
                 await arr.push({name: item.name, latLng: {lat, lng}});
                 await this.prismaService.truck.update({
                     where: {name: item.name},
                     data: {lat, lng, stop: info.stop, tracing: info.tracing},
-                });
-                await console.log({name: item.name, stop: info.stop, tracing: info.tracing, latLng: {lat, lng}});
+                }).catch(e=>{});
+                //await console.log({name: item.name, stop: info.stop, tracing: info.tracing, latLng: {lat, lng}});
             }
         } catch (e) {
-            console.log(e)
+
         } finally {
             if (this.page) this.page.close();
         }

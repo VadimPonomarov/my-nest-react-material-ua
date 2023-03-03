@@ -48,7 +48,7 @@ const _TruckList = () => {
     /*-----------*/
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);

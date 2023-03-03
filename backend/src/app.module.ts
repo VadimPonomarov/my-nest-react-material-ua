@@ -15,6 +15,8 @@ import {JwtProvider} from './modules/auth/providers';
 import {PlaywrightModule} from 'nestjs-playwright';
 import {TruckModule} from './modules/truck/truck.module';
 import {ScrapingProvider} from './modules/truck/providers';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './modules/auth/guards';
 
 @Module({
     controllers: [AppController],
@@ -25,6 +27,10 @@ import {ScrapingProvider} from './modules/truck/providers';
         NodeMailerService,
         JwtProvider,
         ScrapingProvider,
+        {
+            provide: APP_GUARD,
+            useClass: RolesGuard,
+        }
     ],
     imports: [
         BotModule,

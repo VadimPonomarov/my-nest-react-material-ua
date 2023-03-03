@@ -18,7 +18,6 @@ export class TruckService {
                 .findMany({
                     where: {watch: true},
                 })
-                .catch((e) => {});
         } catch (e) {
             throw new Error(e);
         }

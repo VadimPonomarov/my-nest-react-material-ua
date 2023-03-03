@@ -6,7 +6,7 @@ const initialState: IDrawerState = {
     drawer: {
         title: 'MyDrawer',
         isOpened: false,
-        width: '400px'
+        width: '0px'
     }
 };
 

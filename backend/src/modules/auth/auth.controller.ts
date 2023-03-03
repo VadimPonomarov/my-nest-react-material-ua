@@ -16,6 +16,8 @@ import {
     ApiBadRequestResponse,
     ApiBearerAuth,
     ApiCookieAuth,
+    ApiHeader,
+    ApiInternalServerErrorResponse,
     ApiNotFoundResponse,
     ApiOkResponse,
     ApiOperation,
@@ -31,52 +33,14 @@ import {Roles} from './decorators';
 import cookieParser from 'cookie-parser';
 
 @ApiTags('Auth')
-/*@ApiBearerAuth('accessToken')
-@UseGuards(RolesGuard)*/
+@ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {
     }
 
-    @ApiOperation({summary: 'Returns an array of all users'})
-    /*@Roles(RoleEnum.ADMIN)*/
-    @ApiOkResponse({
-        status: HttpStatus.OK,
-        description: ResEnum.SUCCESS,
-        type: UserEntity,
-        isArray: true,
-    })
-    @ApiBadRequestResponse({
-        status: HttpStatus.BAD_REQUEST,
-        description: ResEnum.FAILURE,
-    })
-    @Get('users')
-    async getAllUsers(@Res() res: Response): Promise<void> {
-        await this.authService
-            .getAll()
-            .then((result) => res.status(HttpStatus.OK).send({result}))
-            .catch((e) => res.send(e.message));
-    }
+    /*-------------------------*/
 
-    @ApiOkResponse({
-        status: HttpStatus.OK,
-        description: 'Success',
-    })
-    @ApiNotFoundResponse({
-        status: HttpStatus.NOT_FOUND,
-        description: 'Not found',
-    })
-    @ApiParam({type: String, name: 'id'})
-    @Get(':id')
-    async getOneById(
-        @Param('id') id: string,
-        @Res() res: Response,
-    ): Promise<void> {
-        await this.authService
-            .getOneById(+id)
-            .then((result) => res.status(HttpStatus.OK).send({result}))
-            .catch((e) => res.status(HttpStatus.NOT_FOUND).send(ResEnum.FAILURE));
-    }
 
     @ApiOkResponse({
         status: HttpStatus.OK,
@@ -100,6 +64,8 @@ export class AuthController {
             );
     }
 
+    /*-------------------------*/
+
     @ApiOkResponse({status: HttpStatus.OK, description: ResEnum.SUCCESS})
     @ApiBadRequestResponse({
         status: HttpStatus.NOT_ACCEPTABLE,
@@ -120,6 +86,18 @@ export class AuthController {
             );
     }
 
+    /*-------------------------*/
+
+    @ApiOkResponse({
+        status: HttpStatus.OK,
+        description: ResEnum.SUCCESS,
+        schema: {example: loginOkSchema}
+    })
+    @ApiBadRequestResponse({
+        status: HttpStatus.NOT_ACCEPTABLE,
+        description: ResEnum.FAILURE,
+    })
+    @ApiOperation({summary: 'Creation / registration of a user'})
     @Post('refresh')
     async postRefresh(@Req() req: Request, @Res() res: Response, @Body() body) {
         const result = await this.authService.refreshTokenPair(
@@ -132,10 +110,12 @@ export class AuthController {
             .send({message: ResEnum.SUCCESS, result: result});
     }
 
+    /*-------------------------*/
+
     @ApiOkResponse({
         status: HttpStatus.OK,
         description: ResEnum.SUCCESS,
-        schema: loginOkSchema,
+        schema: {example: loginOkSchema},
     })
     @ApiBadRequestResponse({
         status: HttpStatus.NOT_ACCEPTABLE,
