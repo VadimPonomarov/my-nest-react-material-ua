@@ -40,10 +40,11 @@ export class TruckService {
         try {
             if (!truckList.length) {
                 truckList = (await this.prismaService.truck
-                    .findMany({
-                        where: {AND: {watch: true, updatedAt: {lte: new Date(Date.now() - 15 * 60 * 1000)}}},
+                    .findMany({select: {name: true},
+                        where: {AND: {watch: {equals: true}, updatedAt: {lte: new Date(Date.now() - 15 * 60 * 1000)}}},
                     })
-                    .catch((e) => {})) as TruckNamesListDto[];
+                    .catch((e) => {
+                    })) as TruckNamesListDto[];
             }
             await this.scrapingProvider
                 .updateTruckCoordinates(truckList)
@@ -63,7 +64,8 @@ export class TruckService {
                     .findMany({
                         where: {code: {equals: null}},
                     })
-                    .catch((e) => {})) as TruckNamesListDto[];
+                    .catch((e) => {
+                    })) as TruckNamesListDto[];
             }
             await this.scrapingProvider.updateTruckCodes(truckList).catch((e) => {
             });

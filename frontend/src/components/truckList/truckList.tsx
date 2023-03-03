@@ -78,7 +78,9 @@ const _TruckList = () => {
                                     style={{width: column.minWidth, padding: "0 4px", height: "15px"}}
                                 >
                                     {column.label === 'Show' && <span><Checkbox size="small"/></span>}
-                                    {column.label === 'Info' && <span>️"💬️"</span>}
+                                    {column.label === 'Info' && <span><Checkbox size="small"/></span>}
+                                    {column.label === 'Stop' && <span><Checkbox size="small"/></span>}
+                                    {column.label === 'Tracing' && <span><Checkbox size="small"/></span>}
                                     {column.label === 'Name' &&
                                         <Box><TextField
                                             placeholder={'Filter ...'}
@@ -102,7 +104,9 @@ const _TruckList = () => {
                                                 <TableCell key={column.id} align={column.align}
                                                            style={{padding: "0 4px", height: "15px"}}>
                                                     {column.id === 'Show' && <Checkbox size="small"/>}
-                                                    {column.id === 'Info' && <span>"💬️"</span>}
+                                                    {column.id === 'Info' && <span>💬️</span>}
+                                                    {column.label === 'Stop' && row.stop.includes('icon-device-stop') && <span>️⛔</span>}
+                                                    {column.label === 'Tracing' && row.tracing.includes('green-color') && <span>️👁️‍🗨️</span>}
                                                     {column.id === 'Name' && row.name}
                                                 </TableCell>
                                             );

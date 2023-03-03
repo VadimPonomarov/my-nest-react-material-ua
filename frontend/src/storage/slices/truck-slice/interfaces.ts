@@ -1,11 +1,12 @@
 export interface ITruck {
     id: number;
-    inactive: boolean;
-    code: string;
+    watch: boolean;
+    code?: string;
     name: string;
-    tracing: boolean;
-    lat: string;
-    lng: string;
+    stop?: string;
+    tracing?: string;
+    lat?: string;
+    lng?: string;
     createdAt: string;
     updatedAt: string;
 }
