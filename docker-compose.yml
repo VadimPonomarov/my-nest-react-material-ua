@@ -5,7 +5,7 @@ services:
     build:
       context: .
     env_file:
-      - .env
+      - /backend/.env
     restart: on-failure
     ports:
       - "3000:3001"
@@ -38,10 +38,10 @@ services:
       - "8080:8080"
 
   web:
-    image: nginx:alpine
+    image: nginx:latest
     ports:
       - "80:80"
     restart: on-failure
     volumes:
       - ./client:/usr/share/nginx/html;
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf;

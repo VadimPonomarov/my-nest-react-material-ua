@@ -33,7 +33,7 @@ const transformCircular = createTransform(
 const persistConfig = {
     key: 'root',
     storage,
-    //blacklist: ['tracking', 'JSON']
+    //blacklist: ['tracking']
     /* transforms: [transformCircular]*/
 };
 
