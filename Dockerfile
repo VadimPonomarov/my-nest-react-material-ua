@@ -14,6 +14,6 @@ RUN npm run build
 
 RUN npm run prisma:generate
 
-CMD ["node", "dist/src/main"]
+#CMD ["node", "dist/src/main"]
 
 

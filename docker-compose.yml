@@ -8,7 +8,7 @@ services:
       - /backend/.env
     restart: on-failure
     ports:
-      - "3000:3001"
+      - "3001:3001"
     depends_on:
       - db
     volumes:
@@ -16,7 +16,7 @@ services:
       - ./backend/dist:/app
       - /app/node_modules
     command: >
-      sh -c  "npm run prisma:migrate:init && npm run prisma:seed"
+      sh -c  "npm run prisma:migrate:init && npm run prisma:seed && npm run start:dev"
 
   db:
     image: mysql:8.0
