@@ -1,9 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {initialState} from "./constants";
-import {IToken} from "./interfaces";
 import {ILoginInputs, IRegistrationInputs} from "../../../interfaces";
 import {_axiosService} from '../../services'
+import {initialState} from "./constants";
+import {IToken} from "./interfaces";
 
 export const login = createAsyncThunk<IToken, ILoginInputs, { rejectValue: string }>(
     "auth/login",

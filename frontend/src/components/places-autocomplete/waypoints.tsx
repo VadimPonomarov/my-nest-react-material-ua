@@ -1,7 +1,7 @@
 import React, {FC, memo} from 'react';
 
-import {PlacesAutocomplete} from './places-autocomplete';
 import {useAppSelector} from '../../storage';
+import {PlacesAutocomplete} from './places-autocomplete';
 
 
 const _Waypoints: FC = () => {

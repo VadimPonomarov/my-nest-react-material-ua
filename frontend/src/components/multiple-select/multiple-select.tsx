@@ -7,10 +7,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-import {MenuProps} from './config/config';
-import {MultipleSelectList} from './multiple-select-list';
 import {setWatchAll, useAppDispatch, useAppSelector} from '../../storage';
 import {IDirection} from '../../storage/slices/directions-slice/interfaces';
+import {MenuProps} from './config/config';
+import {MultipleSelectList} from './multiple-select-list';
 
 const _MultipleSelect: FC = () => {
     const dispatch = useAppDispatch();

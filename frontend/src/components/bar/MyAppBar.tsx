@@ -5,9 +5,9 @@ import {AccountCircle, Menu as MenuIcon} from "@mui/icons-material";
 import {AppBar, Box, FormControlLabel, FormGroup, IconButton, Menu, MenuItem, Switch, Toolbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-import css from './index.module.scss';
 import {changeDrawer, setIsAuth, useAppDispatch, useAppSelector} from '../../storage';
 import {config} from '../truckList';
+import css from './index.module.scss';
 
 const _AppBar: FC = () => {
     const {isAuth} = useAppSelector(state => state.auth);

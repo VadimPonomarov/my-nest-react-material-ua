@@ -4,17 +4,6 @@ import {Box, Dialog} from '@mui/material';
 import Button from '@mui/material/Button';
 import {DirectionsRenderer, GoogleMap, InfoWindow, Marker, useLoadScript} from '@react-google-maps/api';
 
-import {mapContainerStyle, mapOptions, markerOptions, markerPosition, useLoadOptions} from './conf';
-import css from './index.module.scss';
-import {IIwContent} from './interfaces';
-import {
-    changeMarkerLatLngService,
-    getContentByIdService,
-    onDblClickPointerSevice,
-    onMarkerClickService,
-    onMarkerRightClickHandlerService
-} from './services';
-import {addMarkerService} from './services/addMarkerService';
 import {iconsEnum} from '../../icons';
 import {
     addMarker,
@@ -30,6 +19,17 @@ import {DialogList} from '../dialog/dialogList';
 import {PlacesAutocompleteForm} from '../places-autocomplete/places-autocomplete-form';
 import {PositionedPopper} from '../popper/popper';
 import {PopperTypesEnum} from '../popper/popper-types.enum';
+import {mapContainerStyle, mapOptions, markerOptions, markerPosition, useLoadOptions} from './conf';
+import css from './index.module.scss';
+import {IIwContent} from './interfaces';
+import {
+    changeMarkerLatLngService,
+    getContentByIdService,
+    onDblClickPointerSevice,
+    onMarkerClickService,
+    onMarkerRightClickHandlerService
+} from './services';
+import {addMarkerService} from './services/addMarkerService';
 
 const _GoogleMaps: FC = () => {
     const {isLoaded, loadError} = useLoadScript(useLoadOptions);

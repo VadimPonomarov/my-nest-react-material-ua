@@ -55,8 +55,7 @@
     "redux-typescript": "^1.2.1"
   },
   "scripts": {
-    "nodemon": "nomemon npm start",
-    "start": "react-scripts start",
+    "start": "npm run fix && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

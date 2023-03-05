@@ -73,7 +73,7 @@ const _TruckList = () => {
                         <TableRow>
                             {columns.map((column) => (
                                 <TableCell
-                                    key={column.id}
+                                    key={v4()}
                                     align={column.align}
                                     style={{width: column.minWidth, padding: "0 4px", height: "15px"}}
                                 >
@@ -97,16 +97,18 @@ const _TruckList = () => {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={v4()}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell key={column.id} align={column.align}
+                                                <TableCell key={v4()} align={column.align}
                                                            style={{padding: "0 4px", height: "15px"}}>
                                                     {column.id === 'Show' && <Checkbox size="small"/>}
                                                     {column.id === 'Info' && <span>💬️</span>}
-                                                    {column.label === 'Stop' && row.stop.includes('icon-device-stop') && <span>️⛔</span>}
-                                                    {column.label === 'Tracing' && row.tracing.includes('green-color') && <span>️👁️‍🗨️</span>}
+                                                    {column.label === 'Stop' && row.stop.includes('icon-device-stop') &&
+                                                        <span>️⛔</span>}
+                                                    {column.label === 'Tracing' && row.tracing.includes('green-color') &&
+                                                        <span>️👁️‍🗨️</span>}
                                                     {column.id === 'Name' && row.name}
                                                 </TableCell>
                                             );
