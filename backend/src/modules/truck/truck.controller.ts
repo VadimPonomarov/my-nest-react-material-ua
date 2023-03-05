@@ -15,8 +15,10 @@ import {
     ApiBadRequestResponse,
     ApiBearerAuth,
     ApiBody,
+    ApiHeaders,
     ApiOkResponse,
     ApiOperation,
+    ApiSecurity,
     ApiTags,
 } from '@nestjs/swagger';
 import {TruckEntity, TruckNamesListDto} from './dto';
@@ -25,7 +27,7 @@ import {Roles} from '../auth/decorators';
 import {badRequestSchema, truckOkSchema} from './swagger';
 
 @ApiTags('Truck')
-@ApiBearerAuth('accessToken')
+@ApiBearerAuth('defaultBearerAuth')
 @UseGuards(RolesGuard)
 @Controller('truck')
 export class TruckController {
@@ -44,6 +46,7 @@ export class TruckController {
         description: ResEnum.FAILURE,
     })
     @Roles(RoleEnum.ADMIN)
+    @ApiBearerAuth()
     @Get()
     async getAll(@Res() res: Response): Promise<TruckEntity[] | void> {
         await this.truckService

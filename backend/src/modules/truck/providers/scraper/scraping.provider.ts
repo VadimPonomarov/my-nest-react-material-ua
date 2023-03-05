@@ -63,15 +63,18 @@ export class ScrapingProvider {
                     .locator(`xpath=//span[contains(text(), "${item.name}")]`)
                     .nth(0)
                     .click()
-                    .catch((e) => console.log(e));
+                    .catch((e) => {
+                    });
                 await this.page
                     .waitForSelector(`#tooltip .coordinates .coordinates`)
-                    .catch((e) => console.log(e));
+                    .catch((e) => {
+                    });
                 const res = await this.page
                     .$$eval('#tooltip .coordinates .coordinates', (e) =>
                         e.map((item) => item.innerHTML),
                     )
-                    .catch((e) => console.log(e));
+                    .catch((e) => {
+                    });
                 const _res = await res[0]
                     .replace('<div>', '')
                     .replace('</div>', ',')

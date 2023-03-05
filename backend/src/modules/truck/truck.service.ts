@@ -38,7 +38,8 @@ export class TruckService {
         truckList: TruckNamesListDto[] = [],
     ): Promise<void> {
         try {
-            if (!truckList.length) {
+            if (truckList.length) return;
+            else {
                 truckList = (await this.prismaService.truck
                     .findMany({select: {name: true},
                         where: {AND: {watch: {equals: true}, updatedAt: {lte: new Date(Date.now() - 15 * 60 * 1000)}}},
@@ -46,11 +47,10 @@ export class TruckService {
                     .catch((e) => {
                     })) as TruckNamesListDto[];
             }
-            await this.scrapingProvider
+            return await this.scrapingProvider
                 .updateTruckCoordinates(truckList)
                 .catch((e) => {
                 });
-            return;
         } catch (e) {
             throw new Error(e);
         }
@@ -59,7 +59,8 @@ export class TruckService {
     @Cron(CronExpression.EVERY_5_MINUTES)
     async updateTruckCodes(truckList: TruckNamesListDto[] = []): Promise<void> {
         try {
-            if (!truckList.length) {
+            if (truckList.length) return;
+            else {
                 truckList = (await this.prismaService.truck
                     .findMany({
                         where: {code: {equals: null}},
