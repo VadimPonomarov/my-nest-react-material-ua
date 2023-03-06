@@ -1,9 +1,8 @@
-import React, {memo} from 'react';
+import React, {FC, memo, ReactNode} from 'react';
 
 import {Navigate} from "react-router-dom";
 
 import {useAppSelector} from "../storage";
-
 
 const _PrivateRoute = ({children}) => {
     const {isAuth} = useAppSelector(state => state.auth);

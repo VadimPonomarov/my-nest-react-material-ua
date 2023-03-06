@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState, useTransition} from 'react';
+import React, {memo, useEffect, useState, useTransition} from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -71,7 +71,7 @@ const _TruckList = () => {
             <TableContainer>
                 <Table>
                     <TableHead>
-                        <TableRow>
+                        <TableRow key={v4()}>
                             {columns.map((column) => (
                                 <TableCell
                                     key={v4()}
@@ -83,11 +83,13 @@ const _TruckList = () => {
                                     {column.label === 'Stop'}
                                     {column.label === 'Tracing'}
                                     {column.label === 'Name' &&
-                                        <Box><TextField
-                                            placeholder={'Filter ...'}
-                                            variant={'standard'}
-                                            onChange={(e) => filterHandler(e)}
-                                        /></Box>
+                                        <Box>
+                                            <TextField
+                                                placeholder={'Filter ...'}
+                                                variant={'standard'}
+                                                onChange={(e) => filterHandler(e)}
+                                            />
+                                        </Box>
                                     }
                                 </TableCell>
                             ))}
@@ -97,7 +99,7 @@ const _TruckList = () => {
                         {filtered
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
-                                return (<TableRow hover role="checkbox" tabIndex={-1} key={v4()}>
+                                return (<TableRow hover role="checkbox" key={v4()}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (

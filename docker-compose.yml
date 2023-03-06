@@ -13,7 +13,7 @@ services:
       - db
     volumes:
       - ./backend/package.json:/app/package.json
-      - ./backend/dist:/app
+      - ./backend:/app
       - /app/node_modules
     command: >
       sh -c  "npm run prisma:migrate:init && npm run prisma:seed && npm run start:dev"
@@ -48,7 +48,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend/package.json:/app/package.json
+      - ./frontend:/app
       - /app/node_modules
     command: >
       sh -c  "npm run fix && npm run start"

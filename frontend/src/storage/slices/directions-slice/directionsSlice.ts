@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {v4} from 'uuid';
 
-import {ISign} from '../../../components/places-autocomplete/interfaces';
-import {ILatLng} from '../marker-slice/interfaces';
 import {initialDirectionCurrent, initialState} from './constants';
 import {IDirection, IPayloadThrough, IShowCurrent} from './interfaces';
+import {ISign} from '../../../components/places-autocomplete/interfaces';
+import {ILatLng} from '../marker-slice/interfaces';
 
 const directionsSlice = createSlice({
     name: "directions",

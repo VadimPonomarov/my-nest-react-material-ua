@@ -3,10 +3,9 @@ import {
     combineReducers,
     configureStore,
     ThunkAction,
-    getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 import * as flatted from 'flatted';
-import {persistReducer, createTransform} from 'redux-persist';
+import {persistReducer, createTransform } from 'redux-persist';
 import persistStore from 'redux-persist/es/persistStore';
 import storage from 'redux-persist/lib/storage';
 
@@ -33,8 +32,6 @@ const transformCircular = createTransform(
 const persistConfig = {
     key: 'root',
     storage,
-    //blacklist: ['tracking']
-    /* transforms: [transformCircular]*/
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

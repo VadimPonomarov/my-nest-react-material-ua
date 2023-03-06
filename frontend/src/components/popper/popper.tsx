@@ -8,10 +8,10 @@ import Grid from '@mui/material/Grid';
 import Popper, {PopperPlacementType} from '@mui/material/Popper';
 import {motion} from 'framer-motion';
 
-import {setCurrentIcon, useAppDispatch, useAppSelector} from '../../storage';
-import {MarkerIconsList} from '../marker-icons-list/marker-icons-list';
 import css from './index.module.scss';
 import {IProps} from './interfaces/interfaces';
+import {setCurrentIcon, useAppDispatch, useAppSelector} from '../../storage';
+import {MarkerIconsList} from '../marker-icons-list/marker-icons-list';
 
 
 const _PositionedPopper: FC<IProps> = (props) => {
