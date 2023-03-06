@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import {v4} from 'uuid';
 
 import {columns} from '.';
@@ -24,7 +25,7 @@ const _TruckList = () => {
     const getTruckList = () => {
         dispatch(truckList());
     };
-    const [filtered, setFiltered] = useState([]);
+    const [filtered, setFiltered] = useState(trucks);
     const [pending, startTransition] = useTransition();
 
     const filterHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -78,9 +79,9 @@ const _TruckList = () => {
                                     style={{width: column.minWidth, padding: "0 4px", height: "15px"}}
                                 >
                                     {column.label === 'Show' && <span><Checkbox size="small"/></span>}
-                                    {column.label === 'Info' && <span><Checkbox size="small"/></span>}
-                                    {column.label === 'Stop' && <span><Checkbox size="small"/></span>}
-                                    {column.label === 'Tracing' && <span><Checkbox size="small"/></span>}
+                                    {column.label === 'Info'}
+                                    {column.label === 'Stop'}
+                                    {column.label === 'Tracing'}
                                     {column.label === 'Name' &&
                                         <Box><TextField
                                             placeholder={'Filter ...'}
@@ -96,19 +97,19 @@ const _TruckList = () => {
                         {filtered
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={v4()}>
+                                return (<TableRow hover role="checkbox" tabIndex={-1} key={v4()}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={v4()} align={column.align}
                                                            style={{padding: "0 4px", height: "15px"}}>
                                                     {column.id === 'Show' && <Checkbox size="small"/>}
-                                                    {column.id === 'Info' && <span>💬️</span>}
-                                                    {column.label === 'Stop' && row.stop.includes('icon-device-stop') &&
-                                                        <span>️⛔</span>}
-                                                    {column.label === 'Tracing' && row.tracing.includes('green-color') &&
-                                                        <span>️👁️‍🗨️</span>}
+                                                    {column.id === 'Info' && <Typography>💬️</Typography>}
+                                                    {column.label === 'Stop' &&
+                                                    row.stop.includes("icon-device-sto") ?
+                                                        <Typography>⛔️</Typography> : ''}
+                                                    {column.label === 'Tracing' &&
+                                                    row.tracing.includes("green") ? <Typography>👁️️</Typography> : ''}
                                                     {column.id === 'Name' && row.name}
                                                 </TableCell>
                                             );

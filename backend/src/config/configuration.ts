@@ -42,7 +42,6 @@ export default () => ({
     },
     scrapeProvider: {
         configOptions: {
-            channel: 'chromium',
             headless: true,
             isGlobal: true,
         },

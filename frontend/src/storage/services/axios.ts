@@ -5,6 +5,7 @@ import {ILoginInputs, IRegistrationInputs} from "../../interfaces";
 const _baseUrl = process.env.REACT_APP_AXIOS_BASE_URL as string;
 const _axios = axios.create({
     baseURL: _baseUrl,
+    withCredentials:false
 });
 
 export const _accessToken = () => {
@@ -31,7 +32,7 @@ _axios.interceptors.request.use((config) => {
 _axios.interceptors.response.use((config) => {
     return config;
 }, (error) => {
-    if (error.config.status !=='403') throw new Error(error);
+    if (error.config.status !== '403') throw new Error(error);
     const originalReq = error.config;
     try {
         _axiosService.getRefreshToken().then(res => localStorage.setItem('tokenPair', JSON.stringify(res.data.result)))

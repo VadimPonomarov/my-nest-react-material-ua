@@ -18,8 +18,8 @@ export const _truckList: () => Promise<CreateTruckDto[]> = async () => {
   await page.type('#user', config().scrapeProvider.logName);
   await page.type('#passw', config().scrapeProvider.pass);
   await page.click('#submit');
-  await page.waitForSelector('#hb_mi_monitoring > div > span');
-  await page.click('#hb_mi_monitoring > div > span');
+  //await page.waitForSelector('#hb_mi_monitoring > div > span');
+  await page.locator('#hb_mi_monitoring > div > span').click();
   const trucks = await page
     .locator("xpath=//span[contains(@dir,'auto')]")
     .allInnerTexts();
