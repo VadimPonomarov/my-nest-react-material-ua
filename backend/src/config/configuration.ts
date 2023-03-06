@@ -10,13 +10,11 @@ const swagger = new DocumentBuilder()
     .setDescription('API description')
     .setVersion('1.0')
     .addBearerAuth({
-            description: 'Default JWT Authorization',
-            type: 'http',
-            in: 'authorisation ',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-        },
-        'defaultBearerAuth')
+        type:"http",
+        scheme:'bearer',
+        bearerFormat:'JWT',
+
+    } ,'access-token')
     .build();
 export default () => ({
     port: parseInt(process.env.PORT, 10) || 3001,

@@ -4,7 +4,6 @@ import {
     Delete,
     Get,
     HttpStatus,
-    Post,
     Res,
     UseGuards,
 } from '@nestjs/common';
@@ -15,19 +14,17 @@ import {
     ApiBadRequestResponse,
     ApiBearerAuth,
     ApiBody,
-    ApiHeaders,
     ApiOkResponse,
     ApiOperation,
-    ApiSecurity,
     ApiTags,
 } from '@nestjs/swagger';
 import {TruckEntity, TruckNamesListDto} from './dto';
 import {RolesGuard} from '../auth/guards';
 import {Roles} from '../auth/decorators';
-import {badRequestSchema, truckOkSchema} from './swagger';
+import {truckOkSchema} from './swagger';
 
 @ApiTags('Truck')
-@ApiBearerAuth('defaultBearerAuth')
+@ApiBearerAuth('access-token')
 @UseGuards(RolesGuard)
 @Controller('truck')
 export class TruckController {
@@ -46,7 +43,6 @@ export class TruckController {
         description: ResEnum.FAILURE,
     })
     @Roles(RoleEnum.ADMIN)
-    @ApiBearerAuth()
     @Get()
     async getAll(@Res() res: Response): Promise<TruckEntity[] | void> {
         await this.truckService
@@ -58,7 +54,6 @@ export class TruckController {
                 res.status(HttpStatus.FORBIDDEN).send(ResEnum.FAILURE),
             );
     }
-
 
 
     @ApiOperation({

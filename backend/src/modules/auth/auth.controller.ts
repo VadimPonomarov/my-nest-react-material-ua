@@ -7,33 +7,22 @@ import {
     Post,
     Req,
     Res,
-    UseGuards,
 } from '@nestjs/common';
-import * as dayjs from 'dayjs';
 import {AuthService} from './auth.service';
 import {CreateUserDto, JwtDto, LogInDto} from './dto';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
-    ApiCookieAuth,
-    ApiHeader,
-    ApiInternalServerErrorResponse,
-    ApiNotFoundResponse,
     ApiOkResponse,
     ApiOperation,
-    ApiParam,
     ApiTags,
 } from '@nestjs/swagger';
 import {Request, Response} from 'express';
-import {JwtEnum, ResEnum, RoleEnum} from '../../common/constants';
-import {RolesGuard} from './guards';
+import {JwtEnum, ResEnum} from '../../common/constants';
 import {loginOkSchema} from './swagger';
-import {UserEntity} from './dto/entities';
-import {Roles} from './decorators';
-import cookieParser from 'cookie-parser';
 
 @ApiTags('Auth')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {
@@ -50,7 +39,7 @@ export class AuthController {
         status: HttpStatus.NOT_ACCEPTABLE,
         description: ResEnum.FAILURE,
     })
-    @ApiOperation({summary: 'Creation / registration of a user'})
+    @ApiOperation({summary: 'User registration'})
     @Post('register')
     async postCreate(
         @Body() createUserDto: CreateUserDto,
@@ -71,7 +60,7 @@ export class AuthController {
         status: HttpStatus.NOT_ACCEPTABLE,
         description: ResEnum.FAILURE,
     })
-    @ApiOperation({summary: 'Activation of a user'})
+    @ApiOperation({summary: 'User activation'})
     @Get('activate/:jwt')
     async getActivateUser(@Param() params, @Res() res) {
         const payLoad: JwtDto = {
@@ -97,7 +86,7 @@ export class AuthController {
         status: HttpStatus.NOT_ACCEPTABLE,
         description: ResEnum.FAILURE,
     })
-    @ApiOperation({summary: 'Creation / registration of a user'})
+    @ApiOperation({summary: 'Token pair refreshment'})
     @Post('refresh')
     async postRefresh(@Req() req: Request, @Res() res: Response, @Body() body) {
         const result = await this.authService.refreshTokenPair(
