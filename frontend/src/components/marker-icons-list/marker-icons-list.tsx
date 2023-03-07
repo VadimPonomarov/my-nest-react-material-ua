@@ -2,9 +2,9 @@ import React, {FC, memo, useCallback, useState} from 'react';
 
 import {Box, Paper} from '@mui/material';
 
+import css from './index.module.scss';
 import {iconsEnum} from '../../icons';
 import {setCurrentIcon, useAppDispatch} from '../../storage';
-import css from './index.module.scss';
 
 const _MarkerIconsList: FC = () => {
     const dispatch = useAppDispatch();

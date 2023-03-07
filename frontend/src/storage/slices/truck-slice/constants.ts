@@ -1,8 +1,8 @@
-import { IInitialState } from "./interfaces";
+import {IInitialState} from "./interfaces";
 
 export const initialState: IInitialState = {
     trucks: [],
-    checkedAll: true,
+    checkedAll: false,
     checked: [],
     loading: false,
     error: null,

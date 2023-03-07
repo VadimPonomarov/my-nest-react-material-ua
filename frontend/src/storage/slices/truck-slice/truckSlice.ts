@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction, Dispatch} from '@reduxjs/toolkit';
 
-import {_axiosService} from '../../services';
 import {initialState} from './constants';
 import {ITruck} from './interfaces';
+import {_axiosService} from '../../services';
 
 export const truckList = createAsyncThunk<ITruck[], undefined | null, { rejectValue: string }>(
     "truck/truckList",

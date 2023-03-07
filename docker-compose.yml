@@ -6,7 +6,7 @@ services:
       context: .
     env_file:
       - /backend/.env
-    restart: on-failure
+    restart: always
     ports:
       - "3001:3001"
     depends_on:
@@ -42,7 +42,7 @@ services:
       context: ./frontend/.
     env_file:
       - /frontend/.env
-    restart: on-failure
+    restart: always
     depends_on:
       - app
     ports:

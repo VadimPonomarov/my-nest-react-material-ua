@@ -1,5 +1,5 @@
-import {IMarker} from '../../../storage/slices/marker-slice/interfaces';
 import {iconOptions} from './icon-options';
+import {IMarker} from '../../../storage/slices/marker-slice/interfaces';
 
 type IMap = google.maps.Map;
 type IMarkerOptions = google.maps.MarkerOptions;
