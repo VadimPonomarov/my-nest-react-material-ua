@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction, Dispatch} from '@reduxjs/toolkit';
 
+import {_axiosService} from '../../services';
 import {initialState} from './constants';
 import {ITruck} from './interfaces';
-import {_axiosService} from '../../services';
 
 export const truckList = createAsyncThunk<ITruck[], undefined | null, { rejectValue: string }>(
     "truck/truckList",
@@ -33,6 +33,23 @@ const truckSlice = createSlice({
             }
         },
 
+        setChecked(state, action: PayloadAction<number[]>) {
+            const _checked = state.checked;
+            for (let i of action.payload) {
+                const index = _checked.includes(i);
+                if (!index) _checked.push(i);
+            }
+            state.checked = _checked;
+        },
+
+        toggleCheckedAll(state) {
+            state.checkedAll = !state.checkedAll;
+        },
+
+        deleteChecked(state, action: PayloadAction<number[]>) {
+            state.checked = state.checked.filter(item => !action.payload.includes(item));
+        },
+
         toggleRefresh(state) {
             try {
                 state.refresh = !state.refresh;
@@ -41,6 +58,7 @@ const truckSlice = createSlice({
             }
         }
     },
+
     extraReducers: (builder) => {
         builder
             .addCase(truckList.pending, (state) => {
@@ -58,5 +76,5 @@ const truckSlice = createSlice({
     },
 })
 
-export const {setTruckList, toggleRefresh} = truckSlice.actions;
+export const {setTruckList, toggleRefresh, setChecked, deleteChecked, toggleCheckedAll} = truckSlice.actions;
 export default truckSlice.reducer;

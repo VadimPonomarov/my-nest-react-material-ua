@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState, useTransition} from 'react';
+import React, {memo, useCallback, useEffect, useState, useTransition} from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,12 +16,12 @@ import Typography from '@mui/material/Typography';
 import {v4} from 'uuid';
 
 import {columns} from '.';
-import {useAppDispatch, useAppSelector, truckList} from '../../storage';
+import {useAppDispatch, useAppSelector, truckList, setChecked, deleteChecked, toggleCheckedAll} from '../../storage';
 import {ITruck} from '../../storage/slices/truck-slice/interfaces';
 
 const _TruckList = () => {
     const dispatch = useAppDispatch();
-    const {trucks, refresh} = useAppSelector(state => state.truck);
+    const {trucks, refresh, checked, checkedAll} = useAppSelector(state => state.truck);
     const getTruckList = () => {
         dispatch(truckList());
     };
@@ -39,9 +39,34 @@ const _TruckList = () => {
         });
     };
 
+    const _setChecked = useCallback((idList: number[]) => {
+        dispatch(setChecked(idList));
+    }, [dispatch]);
+    const _deleteChecked = useCallback((idList: number[]) => {
+        dispatch(deleteChecked(idList));
+    }, [dispatch]);
+
+    const _toggleCheckedAll = useCallback(() => {
+        const _idList = trucks.map(item => item.id);
+        if (!checkedAll) {
+            _setChecked(_idList)
+            dispatch(toggleCheckedAll())
+        } else {
+            _deleteChecked(_idList)
+            dispatch(toggleCheckedAll())
+        }
+    }, [_setChecked, _deleteChecked, checkedAll, trucks, dispatch]);
+
+    const handleCheck = (e, id: number) => {
+        e.target['checked'] ?
+            _setChecked([id]) :
+            _deleteChecked([id])
+    }
+
     useEffect(() => {
         setFiltered(trucks);
-    }, [trucks])
+    }, [trucks]);
+
     const setFilterNullHandler = () => {
         setFiltered(trucks);
     };
@@ -78,7 +103,13 @@ const _TruckList = () => {
                                     align={column.align}
                                     style={{width: column.minWidth, padding: "0 4px", height: "15px"}}
                                 >
-                                    {column.label === 'Show' && <span><Checkbox size="small"/></span>}
+                                    {column.label === 'Show' &&
+                                        <Checkbox
+                                            defaultChecked={checkedAll}
+                                            value={checkedAll}
+                                            size="small"
+                                            onClick={() => _toggleCheckedAll()}
+                                        />}
                                     {column.label === 'Info'}
                                     {column.label === 'Stop'}
                                     {column.label === 'Tracing'}
@@ -105,7 +136,13 @@ const _TruckList = () => {
                                             return (
                                                 <TableCell key={v4()} align={column.align}
                                                            style={{padding: "0 4px", height: "15px"}}>
-                                                    {column.id === 'Show' && <Checkbox size="small"/>}
+                                                    {column.id === 'Show' &&
+                                                        <Checkbox
+                                                            defaultChecked={!!checked.includes(row.id)}
+                                                            value={!!checked.includes(row.id)}
+                                                            size="small"
+                                                            onClick={(e) => handleCheck(e, row.id)}
+                                                        />}
                                                     {column.id === 'Info' && <Typography>💬️</Typography>}
                                                     {column.label === 'Stop' &&
                                                     row.stop.includes("icon-device-sto") ?

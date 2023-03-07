@@ -13,6 +13,8 @@ export interface ITruck {
 
 export interface IInitialState {
     trucks: ITruck[];
+    checkedAll: boolean;
+    checked: number[];
     loading: boolean;
     error: string | null;
     refresh: boolean;
