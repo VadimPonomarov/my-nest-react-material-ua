@@ -3,31 +3,25 @@ version: "3.7"
 services:
   app:
     build:
-      context: .
+      context: ./backend/.
     env_file:
-      - /backend/.env
+      - .env
     restart: always
     ports:
       - "3001:3001"
     depends_on:
       - db
     volumes:
-      - ./backend/package.json:/app/package.json
-      - ./backend:/app
       - /app/node_modules
+      - ./backend:/app
     command: >
       sh -c  "npm run prisma:migrate:init && npm run prisma:seed && npm run start:dev"
 
   db:
     image: mysql:8.0
     restart: on-failure
-    environment:
-      MYSQL_USER: user
-      MYSQL_USER_PASSWORD: user
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: versia_plus
-    ports:
-      - "3307:3306"
+    env_file:
+      - .env
     volumes:
       - ./mysql:/var/lib/mysql
 
@@ -41,23 +35,14 @@ services:
     build:
       context: ./frontend/.
     env_file:
-      - /frontend/.env
+      - .env
     restart: always
     depends_on:
       - app
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
       - /app/node_modules
+      - ./frontend:/app
     command: >
       sh -c  "npm run fix && npm run start"
-
-#  web:
-#    image: nginx:latest
-#    ports:
-#      - "80:80"
-#    restart: on-failure
-#    volumes:
-#      - ./client:/usr/share/nginx/html;
-#      - ./nginx.conf:/etc/nginx/conf.d/default.conf;

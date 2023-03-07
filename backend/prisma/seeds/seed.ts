@@ -19,15 +19,18 @@ async function main() {
       await console.log(`User ${user.name} with id: ${user.id} is created`);
     };
     /*trackList*/
-    const _trucksMapped = await _truckList();
-    await prisma.truck.createMany({
-      data: _trucksMapped,
-      skipDuplicates: true,
-    });
-    console.log(_trucksMapped);
-    console.log(
-      `Scraping process is finished and initial truckList is created`,
-    );
+    const isTruckListExist = await prisma.truck.findMany();
+    if (isTruckListExist.length){
+      const _trucksMapped = await _truckList();
+      await prisma.truck.createMany({
+        data: _trucksMapped,
+        skipDuplicates: true,
+      });
+      console.log(_trucksMapped);
+      console.log(
+          `Scraping process is finished and initial truckList is created`,
+      );
+    }
     console.log(`Seeding has finished.`);
   } catch (e) {
     console.log(e);

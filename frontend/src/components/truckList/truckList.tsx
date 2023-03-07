@@ -143,12 +143,12 @@ const _TruckList = () => {
                                                             size="small"
                                                             onClick={(e) => handleCheck(e, row.id)}
                                                         />}
-                                                    {column.id === 'Info' && <Typography>💬️</Typography>}
-                                                    {column.label === 'Stop' &&
-                                                    row.stop.includes("icon-device-sto") ?
-                                                        <Typography>⛔️</Typography> : ''}
-                                                    {column.label === 'Tracing' &&
-                                                    row.tracing.includes("green") ? <Typography>👁️️</Typography> : ''}
+                                                    {column.id === 'Info' && '💬️'}
+                                                    {(column.label === 'Stop' &&
+                                                        row.stop.match("icon-device-stop")) ?
+                                                        '⛔️' : ''}
+                                                    {(column.label === 'Tracing' &&
+                                                        row.tracing.match("green")) ? '👁️' : ''}
                                                     {column.id === 'Name' && row.name}
                                                 </TableCell>
                                             );
