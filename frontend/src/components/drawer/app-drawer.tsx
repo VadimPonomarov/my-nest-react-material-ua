@@ -5,11 +5,12 @@ import Drawer from '@mui/material/Drawer';
 
 import {BasicTabs} from '..';
 import {changeDrawer, useAppDispatch, useAppSelector} from '../../storage';
-import css from './index.module.scss'
+import css from './index.module.scss';
 
 const _AppDrawer: FC = () => {
     const drawerRef = useRef();
     const {isOpened, width: drawerWidth, title} = useAppSelector(state => state.drawer.drawer);
+    const {isAuth} = useAppSelector(state => state.auth);
     const dispatch = useAppDispatch();
     const handleDrag = useCallback((e: React.MouseEvent): void => {
         e.preventDefault();

@@ -110,9 +110,9 @@ const _TruckList = () => {
                                             size="small"
                                             onClick={() => _toggleCheckedAll()}
                                         />}
-                                    {column.label === 'Info'}
-                                    {column.label === 'Stop'}
-                                    {column.label === 'Tracing'}
+                                    {column.label === 'Info' && ''}
+                                    {column.label === 'Stop' && ''}
+                                    {column.label === 'Tracing' && ''}
                                     {column.label === 'Name' &&
                                         <Box>
                                             <TextField
