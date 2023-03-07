@@ -42,7 +42,8 @@ const _AppBar: FC = () => {
 
     const handleClickMenuIcon: React.MouseEventHandler<HTMLButtonElement> =
         (e: React.MouseEvent<HTMLButtonElement>) => {
-            if (drawerWidth !== '0px') {
+        if (!isAuth) return;
+        if (drawerWidth !== '0px') {
                 dispatch(changeDrawer({drawer: {width: "0px", isOpened: false}}))
             } else {
                 +width.split('px')[0] < config.initialWidth ?

@@ -116,7 +116,9 @@ const _GoogleMaps: FC = () => {
                     >
                         {showPlacesAutocomplete ? "👈" : "👉"}
                     </span>
-                    {showPlacesAutocomplete && <PlacesAutocompleteForm/>}
+                    {showPlacesAutocomplete &&
+                        <PlacesAutocompleteForm/>
+                    }
                 </Box>
             </Box>
             <GoogleMap
@@ -166,16 +168,15 @@ const _GoogleMaps: FC = () => {
                             return <Marker key={truck.id} options={options} position={position}/>
                         })}
 
-                {
-                    directions && (
-                        directions
-                            .map(resp =>
-                                resp.active &&
-                                <DirectionsRenderer
-                                    key={resp.id}
-                                    directions={resp.result}
-                                />
-                            ))
+                {directions &&
+                    directions
+                        .map(resp =>
+                            resp.active &&
+                            <DirectionsRenderer
+                                key={resp.id}
+                                directions={resp.result}
+                            />
+                        )
                 }
                 <Dialog open={showModal}>
                     <DialogList selectList={dialogList}/>
