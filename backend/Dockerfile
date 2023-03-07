@@ -1,12 +1,11 @@
 FROM node:18 as development
 WORKDIR /usr/app
 
-COPY ./backend/*config*.json .
-COPY ./backend/package*.json .
+COPY ./package*.json .
 
 RUN npm install
 
-COPY ./backend .
+COPY . .
 
 RUN npx playwright install-deps
 
