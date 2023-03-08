@@ -39,7 +39,7 @@ const _AppDrawer: FC = () => {
                 <Paper className={css.paper} draggable={false}>
                     <Box>
                         <h1>
-                            Header
+                            Header ...
                         </h1>
                     </Box>
                     <BasicTabs/>
