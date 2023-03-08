@@ -16,7 +16,15 @@ import Typography from '@mui/material/Typography';
 import {v4} from 'uuid';
 
 import {columns} from '.';
-import {useAppDispatch, useAppSelector, truckList, setChecked, deleteChecked, toggleCheckedAll} from '../../storage';
+import {
+    useAppDispatch,
+    useAppSelector,
+    truckList,
+    setChecked,
+    deleteChecked,
+    toggleCheckedAll,
+    setTruckMarkerToList, removeTruckMarkerFromList
+} from '../../storage';
 import {ITruck} from '../../storage/slices/truck-slice/interfaces';
 
 const _TruckList = () => {
@@ -60,7 +68,11 @@ const _TruckList = () => {
     const handleCheck = (e, id: number) => {
         e.target['checked'] ?
             _setChecked([id]) :
-            _deleteChecked([id])
+            _deleteChecked([id]);
+
+        e.target['checked'] ?
+            dispatch(setTruckMarkerToList({id})) :
+            dispatch(removeTruckMarkerFromList({id}));
     }
 
     useEffect(() => {

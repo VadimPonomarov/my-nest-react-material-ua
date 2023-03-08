@@ -3,9 +3,9 @@ import React, {FC, memo, useCallback, useRef} from 'react';
 import {Box, Paper} from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 
-import css from './index.module.scss';
 import {BasicTabs} from '..';
 import {changeDrawer, useAppDispatch, useAppSelector} from '../../storage';
+import css from './index.module.scss';
 
 const _AppDrawer: FC = () => {
     const drawerRef = useRef();

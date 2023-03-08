@@ -5,9 +5,9 @@ import {AccountCircle, Menu as MenuIcon} from "@mui/icons-material";
 import {AppBar, Box, FormControlLabel, FormGroup, IconButton, Menu, MenuItem, Switch, Toolbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-import css from './index.module.scss';
 import {changeDrawer, setIsAuth, useAppDispatch, useAppSelector} from '../../storage';
 import {config} from '../truckList';
+import css from './index.module.scss';
 
 const _AppBar: FC = () => {
     const {isAuth} = useAppSelector(state => state.auth);
@@ -19,6 +19,7 @@ const _AppBar: FC = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.checked) {
             dispatch(setIsAuth(false));
+            dispatch(changeDrawer({drawer: {width: "0px", isOpened: false}}));
             navigate("/logout");
         } else {
             navigate("/login");
@@ -32,6 +33,7 @@ const _AppBar: FC = () => {
         setWidth((+width.split('px')[0] - 6) + "px");
     }, [width])
 
+
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -42,8 +44,8 @@ const _AppBar: FC = () => {
 
     const handleClickMenuIcon: React.MouseEventHandler<HTMLButtonElement> =
         (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (!isAuth) return;
-        if (drawerWidth !== '0px') {
+            if (!isAuth) return;
+            if (drawerWidth !== '0px') {
                 dispatch(changeDrawer({drawer: {width: "0px", isOpened: false}}))
             } else {
                 +width.split('px')[0] < config.initialWidth ?

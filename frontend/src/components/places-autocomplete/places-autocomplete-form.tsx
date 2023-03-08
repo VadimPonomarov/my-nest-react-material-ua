@@ -3,8 +3,6 @@ import React, {FC, memo} from 'react';
 import {Container} from '@mui/material';
 import Button from '@mui/material/Button';
 
-import {PlacesAutocomplete} from './places-autocomplete';
-import {Waypoints} from './waypoints';
 import {
     addDirectionToArray,
     setCurrentEmpty,
@@ -16,6 +14,8 @@ import {
 } from '../../storage';
 import {calculateRouteService} from '../google-maps-api-component/services';
 import {MultipleSelect} from '../multiple-select/multiple-select';
+import {PlacesAutocomplete} from './places-autocomplete';
+import {Waypoints} from './waypoints';
 
 const _PlacesAutocompleteForm: FC = () => {
     const dispatch = useAppDispatch();

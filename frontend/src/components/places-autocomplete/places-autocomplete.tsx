@@ -6,8 +6,6 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import usePlacesAutocomplete, {getGeocode, getLatLng,} from "use-places-autocomplete";
 import {v4} from 'uuid';
 
-import css from './index.module.scss';
-import {IProps, ISign} from './interfaces';
 import {
     addMarker,
     setDirectionCurrent,
@@ -16,6 +14,8 @@ import {
     useAppSelector
 } from '../../storage';
 import {IDirection, ILocation} from '../../storage/slices/directions-slice/interfaces';
+import css from './index.module.scss';
+import {IProps, ISign} from './interfaces';
 
 const _PlacesAutocomplete: FC<IProps> = (props) => {
     const {placeHolder, isFrom, isThrough, propId} = props;

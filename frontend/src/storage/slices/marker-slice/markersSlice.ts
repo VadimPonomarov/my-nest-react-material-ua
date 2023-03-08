@@ -1,13 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {IChangeMarkerPayload, IIcon, IInitialState, IMarker} from './interfaces';
-
-const initialState: IInitialState = {
-    markers: [],
-    currentIcon: {
-        url: "http://maps.google.com/mapfiles/marker.png"
-    }
-};
+import {initialState} from './constants';
+import {IChangeMarkerPayload, IIcon, IMarker} from './interfaces';
 
 
 const markersSlice = createSlice({
@@ -27,6 +21,19 @@ const markersSlice = createSlice({
                     : marker;
             });
         },
+        setTruckMarkerToList(state, action: PayloadAction<{ id: number }>) {
+            const candidate = state.truckMarkerList.filter(value => value !== action.payload.id);
+            candidate.push(action.payload.id);
+            state.truckMarkerList = candidate;
+        },
+        removeTruckMarkerFromList(state, action: PayloadAction<{ id: number }>) {
+            const candidate = state.truckMarkerList.filter(value => value !== action.payload.id);
+            state.truckMarkerList = candidate;
+        },
+        removeTruckMarkerFromListAll(state) {
+            state.truckMarkerList = []
+        },
+
         changeMarkerIcon(state, action: PayloadAction<IMarker>) {
             const candidate = state.markers.find(item => item.id === action.payload.id);
             if (!candidate) return;
@@ -46,7 +53,10 @@ export const {
     setCurrentIcon,
     changeMarker,
     deleteMarker,
-    changeMarkerIcon
+    changeMarkerIcon,
+    setTruckMarkerToList,
+    removeTruckMarkerFromListAll,
+    removeTruckMarkerFromList
 } = markersSlice.actions;
 export default markersSlice.reducer;
 

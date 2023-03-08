@@ -25,6 +25,7 @@ export interface ICurrentIcon {
 
 export interface IInitialState extends ICurrentIcon {
     markers: IMarker[];
+    truckMarkerList: number []
 }
 
 export interface IChangeMarkerPayload extends ILatLng {
