@@ -17,7 +17,6 @@ const drawerSlice = createSlice({
         changeDrawer(state, action: PayloadAction<Partial<IDrawerState>>) {
             state.drawer = {...state.drawer, ...action.payload.drawer};
         },
-
     }
 });
 
