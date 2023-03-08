@@ -25,14 +25,13 @@ const rootReducer = combineReducers({
 });
 const transformCircular = createTransform(
     (inboundState, key) => JSON.stringify(inboundState),
-    (outboundState, key) => JSON.parse(outboundState),
+    (outboundState, key) => JSON.parse(outboundState)
 )
 
 const persistConfig = {
     key: 'root',
     storage,
-    transforms: [transformCircular],
-    whitelist: ['authSlice']
+    //transforms: [transformCircular],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -44,7 +43,6 @@ export const store = configureStore({
         serializableCheck: false,
     }),
     devTools: process.env.NODE_ENV !== 'production',
-
 
 });
 
